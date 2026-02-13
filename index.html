@@ -1,155 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Vaibhav ❤️</title>
-
-<style>
-body{
-    margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-    text-align:center;
-    color:white;
-    overflow:hidden;
-}
-
-.fadeText{
-    opacity:0;
-    font-size:2.5em;
-    margin-top:20vh;
-    transition:opacity 2s ease;
-}
-
-.show{ opacity:1; }
-
-.gallery{
-    margin-top:40px;
-    display:flex;
-    gap:20px;
-    justify-content:center;
-    flex-wrap:wrap;
-    opacity:0;
-    transition:opacity 2s ease;
-}
-
-.gallery img{
-    width:220px;
-    border-radius:15px;
-    box-shadow:0 8px 15px rgba(0,0,0,0.3);
-    opacity:0;
-    transform:translateY(30px);
-    transition:all 1.5s ease;
-}
-
-.gallery img.showPic{
-    opacity:1;
-    transform:translateY(0);
-}
-
-.question{
-    font-size:2.7em;
-    margin-top:40px;
-    opacity:0;
-    transition:opacity 2s ease;
-}
-
-.buttons{
-    margin-top:30px;
-    opacity:0;
-    transition:opacity 2s ease;
-}
-
-button{
-    padding:15px 40px;
-    font-size:1.3em;
-    border:none;
-    border-radius:40px;
-    cursor:pointer;
-    margin:20px;
-    transition:0.3s;
-}
-
-#yesBtn{
-    background:#2ecc71;
-}
-
-#noBtn{
-    background:#e74c3c;
-}
-
-#noNote{
-    font-size:1em;
-    margin-top:-10px;
-}
-
-/* hearts slower */
-.heart{
-    position:fixed;
-    bottom:-10px;
-    animation:float 10s linear infinite;
-    font-size:18px;
-}
-@keyframes float{
-    to{transform:translateY(-100vh);opacity:0;}
-}
-</style>
-</head>
-
-<body>
-
-<div id="line1" class="fadeText">I love you ❤️</div>
-<div id="line2" class="fadeText">You didn’t ask me...</div>
-<div id="line3" class="fadeText">So here’s something for you</div>
-
-<div class="gallery" id="gallery">
-    <img src="pic1.jpg">
-    <img src="pic2.jpg">
-    <img src="pic3.jpg">
-    <img src="pic4.jpg">
-</div>
-
-<div class="question" id="question">
-    WILL YOU BE MY VALENTINE? 💌
-</div>
-
-<div class="buttons" id="buttons">
-    <button id="yesBtn" onclick="yesClicked()">Yesss 💖</button>
-    <button id="noBtn" onclick="noClicked()">❌ No</button>
-    <div id="noNote">YOU DARE NOT</div>
-</div>
-
 <script>
-// slow hearts
-setInterval(()=>{
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),10000);
-},800);
+// helper to slide in
+function slideIn(el){
+    el.style.transform = "translateY(40px)";
+    el.style.opacity = 0;
+    setTimeout(()=>{
+        el.style.transition = "all 1.8s ease";
+        el.style.transform = "translateY(0)";
+        el.style.opacity = 1;
+    },200);
+}
 
-// staged reveal
-setTimeout(()=>line1.classList.add('show'),1000);
-setTimeout(()=>line2.classList.add('show'),4000);
-setTimeout(()=>line3.classList.add('show'),7000);
+// stage 1 text
+setTimeout(()=>slideIn(line1),1000);
+setTimeout(()=>slideIn(line2),4000);
+setTimeout(()=>slideIn(line3),7000);
 
+// stage 2 gallery
 setTimeout(()=>{
-    gallery.style.opacity=1;
+    gallery.style.opacity = 1;
     const pics=document.querySelectorAll('.gallery img');
     pics.forEach((pic,i)=>{
-        setTimeout(()=>pic.classList.add('showPic'), i*1500);
+        setTimeout(()=>slideIn(pic), i*1800);
     });
 },10000);
 
+// stage 3 question + buttons
 setTimeout(()=>{
-    question.style.opacity=1;
-    buttons.style.opacity=1;
-},17000);
+    slideIn(question);
+    slideIn(buttons);
+},18000);
 
-// buttons
+// buttons behaviour
 let noClicks=0;
 function noClicked(){
     noClicks++;
@@ -159,7 +40,7 @@ function noClicked(){
 
 function yesClicked(){
     document.body.innerHTML=`
-    <div style="margin-top:18%; font-size:2.8em; line-height:1.6;">
+    <div style="margin-top:20%; font-size:2.6em; line-height:1.6;">
         🎉 Congratulations Vaibhav! 🎉<br><br>
         You got lucky 😉<br>
         I knew you’d choose the right answer.<br><br>
@@ -168,6 +49,3 @@ function yesClicked(){
     </div>`;
 }
 </script>
-
-</body>
-</html>
