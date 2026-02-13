@@ -1,36 +1,118 @@
-<script>
-// helper to slide in
-function slideIn(el){
-    el.style.transform = "translateY(40px)";
-    el.style.opacity = 0;
-    setTimeout(()=>{
-        el.style.transition = "all 1.8s ease";
-        el.style.transform = "translateY(0)";
-        el.style.opacity = 1;
-    },200);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Vaibhav ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    text-align:center;
+    color:white;
+    overflow-x:hidden;
 }
 
-// stage 1 text
-setTimeout(()=>slideIn(line1),1000);
-setTimeout(()=>slideIn(line2),4000);
-setTimeout(()=>slideIn(line3),7000);
+.section{
+    opacity:0;
+    transform:translateY(40px);
+    transition:all 1.8s ease;
+}
 
-// stage 2 gallery
-setTimeout(()=>{
-    gallery.style.opacity = 1;
-    const pics=document.querySelectorAll('.gallery img');
-    pics.forEach((pic,i)=>{
-        setTimeout(()=>slideIn(pic), i*1800);
-    });
-},10000);
+.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
-// stage 3 question + buttons
-setTimeout(()=>{
-    slideIn(question);
-    slideIn(buttons);
-},18000);
+.text{
+    font-size:2.2em;
+    margin-top:20vh;
+    padding:0 20px;
+}
 
-// buttons behaviour
+.gallery{
+    margin-top:40px;
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    flex-wrap:wrap;
+    padding:0 15px;
+}
+
+.gallery img{
+    width:90%;
+    max-width:260px;
+    border-radius:15px;
+    box-shadow:0 8px 15px rgba(0,0,0,0.3);
+}
+
+.question{
+    font-size:2.3em;
+    margin:40px 20px 10px;
+}
+
+.buttons{
+    margin-top:20px;
+}
+
+button{
+    padding:14px 32px;
+    font-size:1.1em;
+    border:none;
+    border-radius:40px;
+    cursor:pointer;
+    margin:15px;
+}
+
+#yesBtn{ background:#2ecc71; }
+#noBtn{ background:#e74c3c; }
+
+#noNote{
+    font-size:0.9em;
+    margin-top:-10px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="line1" class="section text">I love you ❤️</div>
+<div id="line2" class="section text">You didn’t ask me...</div>
+<div id="line3" class="section text">So here’s something for you</div>
+
+<div id="gallery" class="section gallery">
+    <img src="pic1.jpg">
+    <img src="pic2.jpg">
+    <img src="pic3.jpg">
+    <img src="pic4.jpg">
+</div>
+
+<div id="question" class="section question">
+    WILL YOU BE MY VALENTINE? 💌
+</div>
+
+<div id="buttons" class="section buttons">
+    <button id="yesBtn" onclick="yesClicked()">Yesss 💖</button>
+    <button id="noBtn" onclick="noClicked()">❌ No</button>
+    <div id="noNote">YOU DARE NOT</div>
+</div>
+
+<script>
+function show(id, delay){
+    setTimeout(()=>{
+        document.getElementById(id).classList.add('show');
+    }, delay);
+}
+
+show('line1', 1000);
+show('line2', 4000);
+show('line3', 7000);
+show('gallery', 10000);
+show('question', 15000);
+show('buttons', 17000);
+
 let noClicks=0;
 function noClicked(){
     noClicks++;
@@ -49,3 +131,6 @@ function yesClicked(){
     </div>`;
 }
 </script>
+
+</body>
+</html>
