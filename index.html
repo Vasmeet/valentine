@@ -15,63 +15,55 @@ body{
     overflow:hidden;
 }
 
-/* Intro screen */
-#intro{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:linear-gradient(135deg,#ff758c,#ff7eb3);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    z-index:10;
-    animation:fadeOut 2s ease 3s forwards;
-}
-@keyframes fadeOut{
-    to{opacity:0;visibility:hidden;}
+.fadeText{
+    opacity:0;
+    font-size:2.5em;
+    margin-top:20vh;
+    transition:opacity 2s ease;
 }
 
-h1{
-    font-size:3em;
-    margin-top:30px;
-}
+.show{ opacity:1; }
 
 .gallery{
-    margin-top:30px;
+    margin-top:40px;
     display:flex;
     gap:20px;
     justify-content:center;
     flex-wrap:wrap;
+    opacity:0;
+    transition:opacity 2s ease;
 }
 
 .gallery img{
     width:220px;
     border-radius:15px;
-    transform:rotate(-2deg);
     box-shadow:0 8px 15px rgba(0,0,0,0.3);
-    transition:0.4s;
-    background:white;
-    padding:10px;
+    opacity:0;
+    transform:translateY(30px);
+    transition:all 1.5s ease;
 }
 
-.gallery img:nth-child(even){
-    transform:rotate(2deg);
+.gallery img.showPic{
+    opacity:1;
+    transform:translateY(0);
 }
 
-.gallery img:hover{
-    transform:scale(1.1) rotate(0deg);
-}
-
-/* Question */
 .question{
-    font-size:2.5em;
+    font-size:2.7em;
     margin-top:40px;
+    opacity:0;
+    transition:opacity 2s ease;
+}
+
+.buttons{
+    margin-top:30px;
+    opacity:0;
+    transition:opacity 2s ease;
 }
 
 button{
-    padding:15px 35px;
-    font-size:1.2em;
+    padding:15px 40px;
+    font-size:1.3em;
     border:none;
     border-radius:40px;
     cursor:pointer;
@@ -87,12 +79,17 @@ button{
     background:#e74c3c;
 }
 
-/* Hearts */
+#noNote{
+    font-size:1em;
+    margin-top:-10px;
+}
+
+/* hearts slower */
 .heart{
     position:fixed;
     bottom:-10px;
-    animation:float 6s linear infinite;
-    font-size:20px;
+    animation:float 10s linear infinite;
+    font-size:18px;
 }
 @keyframes float{
     to{transform:translateY(-100vh);opacity:0;}
@@ -102,52 +99,62 @@ button{
 
 <body>
 
-<div id="intro">
-    <h1>Hey Vaibhav ❤️</h1>
-    <p>Something special is waiting for you...</p>
-</div>
+<div id="line1" class="fadeText">I love you ❤️</div>
+<div id="line2" class="fadeText">You didn’t ask me...</div>
+<div id="line3" class="fadeText">So here’s something for you</div>
 
-<h1>Our Memories</h1>
-
-<div class="gallery">
+<div class="gallery" id="gallery">
     <img src="pic1.jpg">
     <img src="pic2.jpg">
     <img src="pic3.jpg">
     <img src="pic4.jpg">
 </div>
 
-<div class="question">
+<div class="question" id="question">
     WILL YOU BE MY VALENTINE? 💌
 </div>
 
-<button id="yesBtn" onclick="yesClicked()">Yesss 💖</button>
-<button id="noBtn" onclick="noClicked()">No 😜</button>
+<div class="buttons" id="buttons">
+    <button id="yesBtn" onclick="yesClicked()">Yesss 💖</button>
+    <button id="noBtn" onclick="noClicked()">❌ No</button>
+    <div id="noNote">YOU DARE NOT</div>
+</div>
 
 <script>
-// floating hearts
+// slow hearts
 setInterval(()=>{
     const h=document.createElement("div");
     h.className="heart";
     h.innerHTML="❤️";
     h.style.left=Math.random()*100+"vw";
     document.body.appendChild(h);
-    setTimeout(()=>h.remove(),6000);
-},400);
+    setTimeout(()=>h.remove(),10000);
+},800);
 
+// staged reveal
+setTimeout(()=>line1.classList.add('show'),1000);
+setTimeout(()=>line2.classList.add('show'),4000);
+setTimeout(()=>line3.classList.add('show'),7000);
+
+setTimeout(()=>{
+    gallery.style.opacity=1;
+    const pics=document.querySelectorAll('.gallery img');
+    pics.forEach((pic,i)=>{
+        setTimeout(()=>pic.classList.add('showPic'), i*1500);
+    });
+},10000);
+
+setTimeout(()=>{
+    question.style.opacity=1;
+    buttons.style.opacity=1;
+},17000);
+
+// buttons
 let noClicks=0;
-const funnyTexts=[
-"Are you sure? 🤨",
-"Wrong answer mister 😏",
-"Try again Vaibhav 😂",
-"No is not an option here 😌",
-"You’re stuck with me now 😜"
-];
-
 function noClicked(){
-    alert(funnyTexts[noClicks % funnyTexts.length]);
     noClicks++;
-    document.getElementById("yesBtn").style.transform=`scale(${1+noClicks*0.2})`;
-    document.getElementById("noBtn").style.transform=`scale(${1-noClicks*0.1})`;
+    alert("Nice try Vaibhav 😌 Wrong answer. Try again.");
+    document.getElementById("yesBtn").style.transform=`scale(${1+noClicks*0.25})`;
 }
 
 function yesClicked(){
